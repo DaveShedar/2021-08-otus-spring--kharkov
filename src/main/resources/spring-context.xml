@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="testDao" class="dao.TestDaoImpl">
+        <constructor-arg name="fileResourceLoader" ref="fileResourceLoader"/>
+    </bean>
+
+    <bean id="testService" class="service.TestServiceImpl">
+        <constructor-arg name="dao" ref="testDao"/>
+    </bean>
+
+    <bean id="fileResourceLoader" class="loader.FileResourceLoaderImpl">
+        <constructor-arg name="filename" value="/test.csv"/>
+    </bean>
+
+    <bean id="printTest" class="print.PrintTestImpl">
+        <constructor-arg name="testService" ref="testService"/>
+    </bean>
+</beans>
