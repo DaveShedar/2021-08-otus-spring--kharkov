@@ -25,7 +25,7 @@ public class ApplicationConfiguration {
         return relResBundleMessageSource;
     }
 
-    @Bean
+    @Bean("applicationLocale")
     public String applicationLocale() {
         return this.localeConfig.getI18n();
     }
