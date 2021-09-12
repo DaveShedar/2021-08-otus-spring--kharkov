@@ -1,0 +1,5 @@
+application:
+  maxPoints: 5
+  locale:
+    i18n: ru-RU
+#    i18n: en-GB
