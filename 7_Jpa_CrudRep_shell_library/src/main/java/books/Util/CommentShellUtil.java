@@ -25,7 +25,7 @@ public class CommentShellUtil {
     @ShellMethod(key = {"findAllComment"}, value = "List comments of the book")
     @ShellMethodAvailability("isCurrentBookSpecified")
     void findAllComment() {
-        commentRepository.findAllByBookId(currentBook.getId()).forEach(comment -> System.out.println(comment.getComment()));
+        commentRepository.findByBook_Id(currentBook.getId()).forEach(comment -> System.out.println(comment.getComment()));
         currentBook = null;
     }
 
