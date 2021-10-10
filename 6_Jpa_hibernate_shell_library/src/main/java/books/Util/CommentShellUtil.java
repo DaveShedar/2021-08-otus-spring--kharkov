@@ -10,7 +10,10 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
 import org.springframework.shell.standard.ShellOption;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ShellComponent
 @RequiredArgsConstructor
@@ -23,23 +26,25 @@ public class CommentShellUtil {
 
     @ShellMethod(key = {"findAllComment"}, value = "List comments of the book")
     @ShellMethodAvailability("isCurrentBookSpecified")
-    void findAllComment() {
-        commentDao.findAllBookById(currentBook.getId()).forEach(comment -> System.out.println(comment.getComment()));
-        currentBook = null;
+    public List<String> findAllComment() {
+        List<Comment> listAllComments = commentDao.all().stream().filter(c -> c.getBook().getId().equals(currentBook.getId())).collect(Collectors.toList());
+        List<String> comments = new ArrayList<>();
+        listAllComments.forEach(c -> comments.add(c.getComment()));
+        return comments;
     }
 
     @ShellMethod(key = "addComment", value = "Add comment")
     @ShellMethodAvailability("isCurrentBookSpecified")
-    String addComment(@ShellOption(help = "Text of Comment") String text) {
+    public String addComment(@ShellOption(help = "Text of Comment") String text) {
 
         try {
-            if(bookDao.findById(currentBook.getId()) != null) {
+            if (bookDao.findById(currentBook.getId()) != null) {
                 commentDao.save(new Comment(null, text, currentBook));
             }
             currentBook = null;
             return "Комментарий сохранен!";
 
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "Комментарий не сохранен((((";

@@ -3,6 +3,7 @@ insert into authors (id, `name`) values (2, 'Пушкин');
 insert into authors (id, `name`) values (3, 'Ильф');
 insert into authors (id, `name`) values (4, 'Петров');
 insert into authors (id, `name`) values (5, 'Толкин');
+insert into authors (id, `name`) values (6, 'Автор-для-удаления');
 
 insert into genres (id, `name`) values (1, 'Сказка');
 insert into genres (id, `name`) values (2, 'Мистика');

@@ -3,7 +3,7 @@ package books.dao.impl;
 import books.dao.BookDao;
 import books.model.Book;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,8 +11,8 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
-
-@Repository
+@Transactional
+@Service
 @AllArgsConstructor
 public class BookDaoImpl implements BookDao {
 
@@ -21,8 +21,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public Book findById(Long id) {
-        TypedQuery<Book> typedQuery = entityManager.createQuery("select books from Book books where books.id = :id", Book.class).setParameter("id", id);
-        return typedQuery.getSingleResult();
+        return entityManager.find(Book.class, id);
     }
 
     @Override

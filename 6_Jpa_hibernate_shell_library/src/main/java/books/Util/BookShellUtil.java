@@ -7,6 +7,7 @@ import books.dao.GenreDao;
 import books.model.Author;
 import books.model.Book;
 import books.model.Genre;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
@@ -20,7 +21,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @ShellComponent
 public class BookShellUtil {
 
@@ -80,7 +81,6 @@ public class BookShellUtil {
     public String delete() {
 
         String book = currentBook.getTitle();
-        commentDao.deleteByBookId(currentBook.getId());
         bookDao.delete(currentBook.getId());
         currentBook = null;
         return "Книга " + book + " удалена";

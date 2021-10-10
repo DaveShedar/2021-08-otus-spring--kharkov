@@ -2,16 +2,18 @@ package books.dao.impl;
 
 import books.dao.AuthorDao;
 import books.model.Author;
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Data
-@Repository
+@Service
+@Transactional
+@AllArgsConstructor
 public class AuthorDaoImpl implements AuthorDao {
 
     @PersistenceContext
@@ -29,7 +31,6 @@ public class AuthorDaoImpl implements AuthorDao {
                 .getResultList();
     }
 
-    @Transactional
     @Override
     public Author save(Author author) {
         if(author.getId() == null) {
@@ -41,12 +42,21 @@ public class AuthorDaoImpl implements AuthorDao {
         return author;
     }
 
-    @Transactional
     @Override
     public void deleteById(Long id) {
+
         entityManager.createQuery("delete from Author author where author.id = :id")
                 .setParameter("id", id)
                 .executeUpdate();
         entityManager.flush();
     }
+
+    @Override
+    public void removeAuthor(Author author) {
+
+        entityManager.remove(entityManager.contains(author) ? author : entityManager.merge(author));
+        entityManager.flush();
+    }
+
+
 }

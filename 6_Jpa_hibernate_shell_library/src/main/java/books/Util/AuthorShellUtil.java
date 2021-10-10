@@ -2,6 +2,7 @@ package books.Util;
 
 import books.dao.AuthorDao;
 import books.model.Author;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellCommandGroup;
@@ -12,7 +13,7 @@ import org.springframework.shell.standard.ShellOption;
 
 import java.util.List;
 
-@Data
+@AllArgsConstructor
 @ShellComponent
 @ShellCommandGroup("Authors")
 public class AuthorShellUtil {
@@ -50,14 +51,14 @@ public class AuthorShellUtil {
     @ShellMethod(key = {"deleteAuthor"}, value = "Delete author")
     @ShellMethodAvailability(value = "isCurrentAuthorSpecified")
     String deleteAuthor() {
+
         try{
-            authorDao.deleteById(currentAuthor.getId());
+            authorDao.removeAuthor(currentAuthor);
             currentAuthor = null;
             return "Author deleted";
         } catch (Exception e) {
             return "Нельзя оставить книгу без автора!!!";
         }
-
     }
 
     private Availability isCurrentAuthorSpecified() {

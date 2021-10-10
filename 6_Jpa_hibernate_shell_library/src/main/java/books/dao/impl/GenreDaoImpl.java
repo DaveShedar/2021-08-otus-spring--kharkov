@@ -3,7 +3,7 @@ package books.dao.impl;
 import books.dao.GenreDao;
 import books.model.Genre;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -13,7 +13,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Service
+@Transactional
 @AllArgsConstructor
 public class GenreDaoImpl implements GenreDao {
 
@@ -48,7 +49,7 @@ public class GenreDaoImpl implements GenreDao {
     @Transactional
     @Override
     public Genre save(Genre genre) {
-        if(genre.getId() == null) {
+        if (genre.getId() == null) {
             entityManager.persist(genre);
         } else {
             entityManager.merge(genre);

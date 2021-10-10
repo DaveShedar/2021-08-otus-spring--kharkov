@@ -2,6 +2,7 @@ package books.Util;
 
 import books.dao.GenreDao;
 import books.model.Genre;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
@@ -10,7 +11,7 @@ import org.springframework.shell.standard.ShellMethodAvailability;
 import org.springframework.shell.standard.ShellOption;
 import java.util.List;
 
-@Data
+@AllArgsConstructor
 @ShellComponent
 public class GenreShellUtil {
     private final GenreDao genreDao;
