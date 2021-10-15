@@ -11,7 +11,6 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
 @Service
 @AllArgsConstructor
 public class BookDaoImpl implements BookDao {
@@ -32,7 +31,6 @@ public class BookDaoImpl implements BookDao {
 
 
     @Override
-    @Transactional
     public Book save(Book book) {
         if(book.getId() == null) {
             entityManager.persist(book);
@@ -43,7 +41,6 @@ public class BookDaoImpl implements BookDao {
         return book;
     }
 
-    @Transactional
     @Override
     public void delete(Long id) {
         entityManager.createQuery("delete from Book book where book.id = :id").setParameter("id", id).executeUpdate();

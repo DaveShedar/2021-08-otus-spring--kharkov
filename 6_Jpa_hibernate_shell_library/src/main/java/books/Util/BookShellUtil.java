@@ -7,6 +7,10 @@ import books.dao.GenreDao;
 import books.model.Author;
 import books.model.Book;
 import books.model.Genre;
+import books.service.AuthorService;
+import books.service.BookService;
+import books.service.GenreService;
+import books.service.impl.BookServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.Availability;
@@ -21,42 +25,39 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @ShellComponent
 public class BookShellUtil {
 
-    private final BookDao bookDao;
-    private final AuthorDao authorDao;
-    private final GenreDao genreDao;
-    private final CommentDao commentDao;
+    private final AuthorService authorService;
+    private final GenreService genreService;
+    private final BookService bookService;
     private final IoStreamHelper streamHelper;
     private Book currentBook;
 
     @ShellMethod(key = "findAllBook", value = "find all books")
     public List<Book> findAllBook() {
-        return bookDao.findAll();
+        return bookService.findAllBook();
     }
 
     @ShellMethod(key = "getBookById", value = "get book from DB by Id")
-    public Book getBookById(@ShellOption({"book_id"}) long book_id) {
-        return bookDao.findById(book_id);
+    public Book getBookById(@ShellOption({"book_id"}) long bookId) {
+        return bookService.getBookById(bookId);
     }
 
     @ShellMethod(key = {"specifyBook"}, value = "Specify book for update or delete")
     public void specify() {
-        List<Book> listBooks = bookDao.findAll();
+        List<Book> listBooks = bookService.findAllBook();
         String message = "Choose book by ID from the list:\n" + listBooks;
         currentBook = streamHelper.chooseThing(listBooks, message);
     }
 
     @ShellMethod(key = "insertBook", value = "insert book to db")
     public String insertBook(@ShellOption(help = "Book title") String title,
-                                 @ShellOption(help = "Author divided by comma")String[] authors,
-                                 @ShellOption(help = "Genre title")String genre) {
+                             @ShellOption(help = "Author divided by comma")String[] authors,
+                             @ShellOption(help = "Genre title")String genre) {
 
-        Book book = new Book(null, title, getAuthor(Arrays.asList(authors)), getGenre(genre));
-        bookDao.save(book);
-        return "ok";
+        return bookService.insertBook(new Book(null, title, getAuthor(Arrays.asList(authors)), getGenre(genre)));
     }
 
     @ShellMethod(key = {"updateBook"}, value = "update book")
@@ -71,7 +72,7 @@ public class BookShellUtil {
         currentBook.setTitle(title);
         currentBook.setGenre(getGenre(genreName));
         currentBook.setAuthors(getAuthor(Arrays.asList(newAuthors)));
-        bookDao.save(currentBook);
+        bookService.insertBook(currentBook);
         currentBook = null;
         return "Книга обновлена";
     }
@@ -80,10 +81,9 @@ public class BookShellUtil {
     @ShellMethodAvailability(value = "isCurrentBookSpecified")
     public String delete() {
 
-        String book = currentBook.getTitle();
-        bookDao.delete(currentBook.getId());
+        String message = bookService.delete(currentBook.getId());
         currentBook = null;
-        return "Книга " + book + " удалена";
+        return message;
     }
 
     private Availability isCurrentBookSpecified() {
@@ -93,11 +93,12 @@ public class BookShellUtil {
     }
 
     private Genre getGenre(String genreName) {
-        return genreDao.findByName(genreName).orElse(new Genre(null, genreName));
+        return genreService.findByName(genreName);
     }
 
     private List<Author> getAuthor(List<String> newAuthors) {
-        final Map<String, Author> authorsInDb = authorDao.findAllByNameSet(newAuthors).stream()
+
+        final Map<String, Author> authorsInDb = authorService.findAllByNameSet(newAuthors).stream()
                 .collect(Collectors.toMap(Author::getName, Function.identity()));
 
         return newAuthors.stream()

@@ -12,7 +12,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
-@Transactional
+//@Transactional
 public class CommentDaoImpl implements CommentDao {
     @PersistenceContext
     private final EntityManager entityManager;

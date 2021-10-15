@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 @AllArgsConstructor
 public class GenreDaoImpl implements GenreDao {
 
@@ -46,7 +45,6 @@ public class GenreDaoImpl implements GenreDao {
         return Optional.ofNullable(result);
     }
 
-    @Transactional
     @Override
     public Genre save(Genre genre) {
         if (genre.getId() == null) {
@@ -58,7 +56,6 @@ public class GenreDaoImpl implements GenreDao {
         return genre;
     }
 
-    @Transactional
     @Override
     public void deleteById(Long id) {
         entityManager.createQuery("delete from Genre genres where genres.id = :id").setParameter("id", id).executeUpdate();

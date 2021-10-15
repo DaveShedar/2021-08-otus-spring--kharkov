@@ -11,8 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Data
+//@AllArgsConstructor
 @NoArgsConstructor
-@AllArgsConstructor
+
+
 @Entity
 @Table(name = "authors")
 public class Author {
@@ -20,4 +22,9 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    public Author(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 }

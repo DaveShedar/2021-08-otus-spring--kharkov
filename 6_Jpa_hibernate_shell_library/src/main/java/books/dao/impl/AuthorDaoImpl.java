@@ -12,7 +12,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 @AllArgsConstructor
 public class AuthorDaoImpl implements AuthorDao {
 
@@ -43,17 +42,7 @@ public class AuthorDaoImpl implements AuthorDao {
     }
 
     @Override
-    public void deleteById(Long id) {
-
-        entityManager.createQuery("delete from Author author where author.id = :id")
-                .setParameter("id", id)
-                .executeUpdate();
-        entityManager.flush();
-    }
-
-    @Override
     public void removeAuthor(Author author) {
-
         entityManager.remove(entityManager.contains(author) ? author : entityManager.merge(author));
         entityManager.flush();
     }
