@@ -31,7 +31,7 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public String delete(Genre genre) {
         try {
-            genreDao.deleteById(genre.getId());
+            genreDao.deleteById(genre);
             return "Genre deleted";
         } catch (Exception e) {
             return "Нельзя оставить книгу без жанра!!!";

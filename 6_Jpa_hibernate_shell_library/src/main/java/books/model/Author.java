@@ -1,6 +1,5 @@
 package books.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,10 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Data
-//@AllArgsConstructor
 @NoArgsConstructor
-
-
 @Entity
 @Table(name = "authors")
 public class Author {

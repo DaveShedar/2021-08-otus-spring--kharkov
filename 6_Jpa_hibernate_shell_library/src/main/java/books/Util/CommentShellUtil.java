@@ -1,12 +1,8 @@
 package books.Util;
 
-import books.dao.BookDao;
-import books.dao.CommentDao;
 import books.model.Book;
-import books.model.Comment;
 import books.service.BookService;
 import books.service.CommentService;
-import books.service.impl.CommentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
@@ -14,9 +10,7 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
 import org.springframework.shell.standard.ShellOption;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ShellComponent
 @RequiredArgsConstructor

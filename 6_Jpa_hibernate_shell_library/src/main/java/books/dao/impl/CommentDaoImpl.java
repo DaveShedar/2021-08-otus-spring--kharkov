@@ -7,12 +7,10 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @AllArgsConstructor
 @Service
-//@Transactional
 public class CommentDaoImpl implements CommentDao {
     @PersistenceContext
     private final EntityManager entityManager;

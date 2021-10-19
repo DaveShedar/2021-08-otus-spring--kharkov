@@ -9,6 +9,7 @@ insert into genres (id, `name`) values (1, 'Сказка');
 insert into genres (id, `name`) values (2, 'Мистика');
 insert into genres (id, `name`) values (3, 'Приключение');
 insert into genres (id, `name`) values (4, 'Философия');
+insert into genres (id, `name`) values (5, 'Жанр-для-удаления');
 
 insert into books (id, `title`, genre_id) values (1, 'Вечера на хуторе близ Диканьки', 2);
 insert into books (id, `title`, genre_id) values (2, 'Двенадцать стульев', 4);

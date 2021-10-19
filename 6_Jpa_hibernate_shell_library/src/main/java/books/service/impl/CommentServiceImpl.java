@@ -22,6 +22,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<String> findAllComment(Long bookId) {
+
         List<Comment> listAllComments = commentDao.all().stream().filter(c -> c.getBook().getId().equals(bookId)).collect(Collectors.toList());
         List<String> comments = new ArrayList<>();
         listAllComments.forEach(c -> comments.add(c.getComment()));
@@ -43,5 +44,10 @@ public class CommentServiceImpl implements CommentService {
         return "Комментарий не сохранен((((";
     }
 
+    public String deleteComment() {
+
+
+        return "Комментарий удален";
+    }
 
 }

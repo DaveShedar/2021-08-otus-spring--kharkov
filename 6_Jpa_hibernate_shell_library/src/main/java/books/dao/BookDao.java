@@ -11,5 +11,5 @@ public interface BookDao {
 
     Book save(Book book);
 
-    void delete(Long id);
+    void delete(Book book);
 }

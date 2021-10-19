@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +26,7 @@ public class GenreDaoImpl implements GenreDao {
 
     @Override
     public Genre findByById(Long id) {
-        return entityManager.createQuery("select genres from Genre genres where genres.id = :id", Genre.class).setParameter("id", id).getSingleResult();
-
+        return entityManager.find(Genre.class, id);
     }
 
     @Override
@@ -57,7 +55,8 @@ public class GenreDaoImpl implements GenreDao {
     }
 
     @Override
-    public void deleteById(Long id) {
-        entityManager.createQuery("delete from Genre genres where genres.id = :id").setParameter("id", id).executeUpdate();
+    public void deleteById(Genre genre) {
+        entityManager.remove(entityManager.contains(genre) ? genre : entityManager.merge(genre));
+        entityManager.flush();
     }
 }

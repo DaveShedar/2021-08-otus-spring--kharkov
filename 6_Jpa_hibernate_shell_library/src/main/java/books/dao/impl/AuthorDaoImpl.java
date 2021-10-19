@@ -3,12 +3,10 @@ package books.dao.impl;
 import books.dao.AuthorDao;
 import books.model.Author;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service

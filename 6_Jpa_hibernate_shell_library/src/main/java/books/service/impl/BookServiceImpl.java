@@ -35,8 +35,8 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public String delete(Long bookId) {
-        bookDao.delete(bookId);
+    public String delete(Book book) {
+        bookDao.delete(book);
         return "Книга удалена";
     }
 }

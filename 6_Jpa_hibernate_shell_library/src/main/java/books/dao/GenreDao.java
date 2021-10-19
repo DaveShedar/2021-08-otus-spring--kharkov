@@ -15,5 +15,5 @@ public interface GenreDao {
 
     Genre save(Genre genre);
 
-    void deleteById(Long id);
+    void deleteById(Genre genre);
 }

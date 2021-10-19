@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -42,8 +41,8 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public void delete(Long id) {
-        entityManager.createQuery("delete from Book book where book.id = :id").setParameter("id", id).executeUpdate();
+    public void delete(Book book) {
+        entityManager.remove(entityManager.contains(book) ? book : entityManager.merge(book));
         entityManager.flush();
     }
 }

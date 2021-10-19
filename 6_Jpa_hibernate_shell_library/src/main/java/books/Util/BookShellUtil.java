@@ -1,17 +1,11 @@
 package books.Util;
 
-import books.dao.AuthorDao;
-import books.dao.BookDao;
-import books.dao.CommentDao;
-import books.dao.GenreDao;
 import books.model.Author;
 import books.model.Book;
 import books.model.Genre;
 import books.service.AuthorService;
 import books.service.BookService;
 import books.service.GenreService;
-import books.service.impl.BookServiceImpl;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
@@ -81,7 +75,7 @@ public class BookShellUtil {
     @ShellMethodAvailability(value = "isCurrentBookSpecified")
     public String delete() {
 
-        String message = bookService.delete(currentBook.getId());
+        String message = bookService.delete(currentBook);
         currentBook = null;
         return message;
     }
