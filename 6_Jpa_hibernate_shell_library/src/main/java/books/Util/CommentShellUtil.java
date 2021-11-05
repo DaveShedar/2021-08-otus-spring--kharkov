@@ -1,6 +1,7 @@
 package books.Util;
 
 import books.model.Book;
+import books.model.Comment;
 import books.service.BookService;
 import books.service.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,6 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellMethodAvailability;
 import org.springframework.shell.standard.ShellOption;
-
 import java.util.List;
 
 @ShellComponent
@@ -23,8 +23,11 @@ public class CommentShellUtil {
 
     @ShellMethod(key = {"findAllComment"}, value = "List comments of the book")
     @ShellMethodAvailability("isCurrentBookSpecified")
-    public List<String> findAllComment() {
-        return commentService.findAllComment(currentBook.getId());
+    public void findAllComment() {
+
+        commentService.findAllComment(currentBook).forEach(elt -> {
+            System.out.println(elt.getComment());
+        });
     }
 
     @ShellMethod(key = "addComment", value = "Add comment")

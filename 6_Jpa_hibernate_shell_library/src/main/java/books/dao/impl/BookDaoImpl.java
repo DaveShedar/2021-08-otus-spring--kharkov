@@ -24,10 +24,9 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> findAll() {
-        TypedQuery<Book> typedQuery = entityManager.createQuery("select books from Book books join fetch books.genre", Book.class);
+        TypedQuery<Book> typedQuery = entityManager.createQuery("select books from Book books", Book.class);
         return typedQuery.getResultList();
     }
-
 
     @Override
     public Book save(Book book) {

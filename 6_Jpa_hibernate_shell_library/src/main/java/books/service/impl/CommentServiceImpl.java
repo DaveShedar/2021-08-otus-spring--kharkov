@@ -8,9 +8,11 @@ import books.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,12 +23,8 @@ public class CommentServiceImpl implements CommentService {
     private final BookDao bookDao;
 
     @Override
-    public List<String> findAllComment(Long bookId) {
-
-        List<Comment> listAllComments = commentDao.all().stream().filter(c -> c.getBook().getId().equals(bookId)).collect(Collectors.toList());
-        List<String> comments = new ArrayList<>();
-        listAllComments.forEach(c -> comments.add(c.getComment()));
-        return comments;
+    public List<Comment> findAllComment(Book book) {
+        return book.getComments();
     }
 
     @Transactional
@@ -37,7 +35,6 @@ public class CommentServiceImpl implements CommentService {
                 commentDao.save(new Comment(null, text, book));
             }
             return "Комментарий сохранен!";
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,8 +42,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
     public String deleteComment() {
-
-
         return "Комментарий удален";
     }
 

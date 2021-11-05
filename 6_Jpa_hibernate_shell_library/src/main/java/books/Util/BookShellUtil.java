@@ -51,7 +51,7 @@ public class BookShellUtil {
                              @ShellOption(help = "Author divided by comma")String[] authors,
                              @ShellOption(help = "Genre title")String genre) {
 
-        return bookService.insertBook(new Book(null, title, getAuthor(Arrays.asList(authors)), getGenre(genre)));
+        return bookService.insertBook(new Book(null, title, getAuthor(Arrays.asList(authors)), getGenre(genre), null));
     }
 
     @ShellMethod(key = {"updateBook"}, value = "update book")

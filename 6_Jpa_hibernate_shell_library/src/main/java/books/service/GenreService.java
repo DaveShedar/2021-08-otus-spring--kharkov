@@ -1,8 +1,6 @@
 package books.service;
 
 import books.model.Genre;
-
-import javax.transaction.Transactional;
 import java.util.List;
 
 public interface GenreService {
