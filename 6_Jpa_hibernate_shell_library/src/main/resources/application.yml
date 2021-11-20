@@ -1,0 +1,19 @@
+spring:
+    datasource:
+        url: jdbc:h2:mem:books
+
+    h2:
+        console:
+            path: /h2-console
+            settings:
+                web-allow-others: true
+            enabled: true
+    jpa:
+        defer-datasource-initialization: true
+        hibernate:
+            ddl-auto: create
+        show-sql: true
+
+        properties:
+            hibernate:
+                enable_lazy_load_no_trans: true
