@@ -9,7 +9,6 @@ import mongodb.model.Comment;
 import mongodb.model.Genre;
 import mongodb.repository.AuthorRepository;
 import mongodb.repository.BookRepository;
-import mongodb.repository.CommentRepository;
 import mongodb.repository.GenreRepository;
 
 import java.util.ArrayList;
@@ -24,8 +23,7 @@ public class MongoDatabaseChangelog {
     }
 
     @ChangeSet(order = "000", id = "initBooks", author = "kharkov", runAlways = true)
-    public void initBooks(AuthorRepository authorRepository, CommentRepository commentRepository, GenreRepository genreRepository,
-                          BookRepository bookRepository) {
+    public void initBooks(AuthorRepository authorRepository, GenreRepository genreRepository, BookRepository bookRepository) {
         List<Author> authorList = new ArrayList<>();
         List<Comment> commentList = new ArrayList<>();
         List<Book> bookList = new ArrayList<>();
@@ -55,7 +53,6 @@ public class MongoDatabaseChangelog {
         bookList.add(book2);
 
         authorRepository.saveAll(authorList);
-        commentRepository.saveAll(commentList);
         genreRepository.save(genre1);
         genreRepository.save(genre2);
         bookRepository.saveAll(bookList);

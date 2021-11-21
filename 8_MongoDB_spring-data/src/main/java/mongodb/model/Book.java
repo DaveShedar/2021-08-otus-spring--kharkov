@@ -23,6 +23,7 @@ public class Book {
     @DBRef
     private List<Author> authors;
 
+    @DBRef
     private Genre genre;
 
     @DBRef

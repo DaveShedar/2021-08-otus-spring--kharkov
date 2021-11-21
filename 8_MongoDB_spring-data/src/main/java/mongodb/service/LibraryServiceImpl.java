@@ -1,8 +1,5 @@
 package mongodb.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import mongodb.exception.BookNotFoundException;
 import mongodb.model.Author;
@@ -11,12 +8,9 @@ import mongodb.model.Comment;
 import mongodb.model.Genre;
 import mongodb.repository.AuthorRepository;
 import mongodb.repository.BookRepository;
-import mongodb.repository.CommentRepository;
 import mongodb.repository.GenreRepository;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,17 +22,19 @@ public class LibraryServiceImpl implements LibraryService {
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
     private final GenreRepository genreRepository;
-    private final CommentRepository commentRepository;
 
+    @Override
     public Book getBookById(String id) {
         return bookRepository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("Книга не найдена по данным параметрам поиска"));
     }
 
+    @Override
     public void createBook(String bookTitle, String authors, String genre) {
         bookRepository.save(new Book(null, bookTitle, updateAuthor(authors), updateGenre(genre), null));
     }
 
+    @Override
     public void updateBook (Book book, String bookTitle, String authors, String genre, String comments) {
         book.setTitle(bookTitle);
         book.setAuthors(updateAuthor(authors));
@@ -86,29 +82,29 @@ public class LibraryServiceImpl implements LibraryService {
         List<Comment> newCommentList = new ArrayList<>();
 
         Comment newComment = new Comment(null, comment);
-        commentRepository.save(newComment);
-        Comment justSaveComment = commentRepository.findByComment(comment);
 
         if (commentListFromDB.isEmpty()) {
-            newCommentList.add(justSaveComment);
+            newCommentList.add(newComment);
             return newCommentList;
         } else {
-            commentListFromDB.add(justSaveComment);
+            commentListFromDB.add(newComment);
             return commentListFromDB;
         }
     }
 
-
+    @Override
     public void addComment(String comment, Book book) {
         book.setComments(updateComment(book, comment));
         bookRepository.save(book);
 
     }
 
+    @Override
     public List<Book> findAllBooks() {
         return bookRepository.findAll();
     }
 
+    @Override
     public void deleteBook(String id) {
         bookRepository.deleteById(id);
     }
