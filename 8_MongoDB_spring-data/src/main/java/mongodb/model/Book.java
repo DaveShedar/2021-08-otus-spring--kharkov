@@ -26,7 +26,6 @@ public class Book {
     @DBRef
     private Genre genre;
 
-    @DBRef
     private List<Comment> comments;
 
 }
