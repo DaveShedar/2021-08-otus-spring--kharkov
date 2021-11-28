@@ -8,11 +8,12 @@ import java.util.List;
 
 public interface LibraryService {
     List<Book> findAllBooks();
+
     void deleteBook(String id);
 
     void addBook(BookDto bookDto);
 
-    void updateBook(BookDto bookDto);
-
     BookDto updateBookForm(String id);
+
+    List<Author> findAllAuthors();
 }

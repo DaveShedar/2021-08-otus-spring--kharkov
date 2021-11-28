@@ -1,7 +1,6 @@
 package mongodb.service;
 
 import lombok.RequiredArgsConstructor;
-import mongodb.exception.BookNotFoundException;
 import mongodb.model.Author;
 import mongodb.model.Book;
 import mongodb.model.BookDto;
@@ -37,6 +36,10 @@ public class LibraryServiceImpl implements LibraryService {
     @Override
     public void addBook(BookDto bookDto) {
         String id = bookDto.getId();
+        if(id == null || id.isEmpty()) {
+            id = null;
+        }
+
         String title = bookDto.getTitle();
         List<Author> authors = updateAuthor(bookDto.getAuthors());
         Genre genre = updateGenre(bookDto.getGenre());
@@ -56,17 +59,17 @@ public class LibraryServiceImpl implements LibraryService {
 
         StringBuilder authors = new StringBuilder();
         book.getAuthors().forEach(author -> authors.append(author.getName() + ","));
-        authors.substring(0, authors.length() - 1);
+        authors.setLength(authors.length() - 1);
 
         return new BookDto(book.getId(), book.getTitle(), authors.toString(), book.getGenre().getName(), null);
     }
 
     @Override
-    public void updateBook(BookDto bookDto) {
-
+    public List<Author> findAllAuthors() {
+        return authorRepository.findAll();
     }
 
-    public List<Author> updateAuthor(String authors) {
+    private List<Author> updateAuthor(String authors) {
         ArrayList<Author> authorList = new ArrayList<>();
         String[] authorArr = authors.split(",");
         List<String> justAuthorNames = new ArrayList<>();
@@ -85,7 +88,7 @@ public class LibraryServiceImpl implements LibraryService {
         return authorList;
     }
 
-    public Genre updateGenre(String genre) {
+    private Genre updateGenre(String genre) {
         Genre genreToBook;
         List<String> justNameGenre = new ArrayList<>();
         genreRepository.findAll().forEach(elem -> justNameGenre.add(elem.getName()));

@@ -27,30 +27,23 @@ public class BookController {
         return "redirect:/";
     }
 
-    @GetMapping("/add-book")
-    public String addBook(Model model) {
+    @GetMapping("/getForm/{id}")
+    public String getForm(@PathVariable (name = "id") String id, Model model) {
+        model.addAttribute("bookDto", libraryService.updateBookForm(id));
+        model.addAttribute("authorsList", libraryService.findAllAuthors());
+        return "add-update-book";
+    }
+
+    @GetMapping("/getForm")
+    public String getForm(Model model) {
         model.addAttribute("bookDto", new BookDto());
-        return "add-book";
-    }
-
-    @PostMapping("/addbook")
-    public String addBook(BookDto bookDto) {
-        libraryService.addBook(bookDto);
-        return "redirect:/";
-    }
-
-    @GetMapping("/update-book/{id}")
-    public String updateBookForm(@PathVariable (name = "id") String id, Model model) {
-        model.addAttribute("bookDto",libraryService.updateBookForm(id));
-        return "update-book";
+        model.addAttribute("authorsList", libraryService.findAllAuthors());
+        return "add-update-book";
     }
 
     @PostMapping("/updatebook")
     public String updateBook(BookDto bookDto) {
-        libraryService.updateBook(bookDto);
+        libraryService.addBook(bookDto);
         return "redirect:/";
     }
-
-//    @PostMapping("/updatebook")
-//    public String updateBook()
 }
