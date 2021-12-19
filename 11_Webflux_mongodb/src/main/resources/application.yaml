@@ -1,0 +1,9 @@
+Spring:
+  data:
+    mongodb:
+      database: persons
+      port: 27017
+mongock:
+  runner-type: "InitializingBean"
+  change-logs-scan-package:
+    - webflux.demo.changelogs
