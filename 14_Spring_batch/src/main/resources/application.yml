@@ -1,0 +1,33 @@
+spring:
+  data:
+    mongodb:
+#      uri: mongodb://localhost
+      port: 27017
+      database: dbtodb2
+  profiles:
+    active: prod
+
+  datasource:
+    url: jdbc:h2:mem:books
+
+  h2:
+    console:
+      path: /h2-console
+      settings:
+        web-allow-others: true
+      enabled: true
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+
+mongock:
+  #runner-type: "ApplicationRunner" # default
+  runner-type: "InitializingBean"
+  change-logs-scan-package:
+    - dbtodb.changelog
