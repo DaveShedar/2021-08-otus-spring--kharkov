@@ -1,0 +1,18 @@
+spring:
+  data:
+    mongodb:
+#      uri: mongodb://localhost
+      host: ${DB_HOST}
+      port: ${DB_PORT}
+      database: ${DB_NAME}
+
+#  profiles:
+#    active: prod
+
+mongock:
+  #runner-type: "ApplicationRunner" # default
+  runner-type: "InitializingBean"
+  change-logs-scan-package:
+    - mongodb.changelog
+
+
