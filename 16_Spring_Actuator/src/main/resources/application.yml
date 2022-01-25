@@ -1,0 +1,42 @@
+spring:
+  data:
+    mongodb:
+#      uri: mongodb://localhost
+      port: 27017
+      database: library
+  profiles:
+    active: prod
+
+mongock:
+  #runner-type: "ApplicationRunner" # default
+  runner-type: "InitializingBean"
+  change-logs-scan-package:
+    - mongodb.changelog
+
+#<---------metrics ---------->
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    defaults:
+      enabled: true
+  info:
+    git:
+      mode: full
+#  cors:
+#    allowed-origins: http://localhost:9090/
+#    allowed-methods: GET,POST,OPTIONS
+
+info:
+  version: @project.version@
+  author: vadimKharkov
+  description: Spring boot application with metrics
+
+logging:
+  file:
+    name: "logs/application.log"
