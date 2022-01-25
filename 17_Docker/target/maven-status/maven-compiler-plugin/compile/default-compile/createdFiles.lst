@@ -1,0 +1,17 @@
+mongodb\repository\AuthorRepository.class
+mongodb\Application.class
+mongodb\model\BookDto.class
+mongodb\controller\BookRestController.class
+mongodb\model\Author.class
+mongodb\model\Book.class
+mongodb\service\LibraryService.class
+mongodb\service\LibraryServiceImpl.class
+mongodb\exception\BookNotFoundException.class
+mongodb\repository\GenreRepository.class
+mongodb\model\Comment.class
+mongodb\model\Genre.class
+mongodb\configuration\MongoConfig.class
+mongodb\exception\RepositoryException.class
+mongodb\controller\BookController.class
+mongodb\repository\BookRepository.class
+mongodb\changelog\MongoDatabaseChangelog.class

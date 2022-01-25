@@ -1,0 +1,31 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:latest
+    restart: always
+    container_name: mongodb
+    hostname: library-db
+    ports:
+      - 27017:27017
+    networks:
+      - nw
+  springboot-mongodb:
+    build:
+      context: .
+        dockerfile: Dockerfile
+    depends_on:
+      - mongo
+    privileged: true
+    container_name: springboot-mongodb
+    restart: always
+    environment:
+      - DB_HOST=library-db
+      - DB_PORT=27017
+      - DB_NAME=library
+    ports:
+      - 8080:8080
+    networks:
+      - nw
+
+networks:
+  nw:
